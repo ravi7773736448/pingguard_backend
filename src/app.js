@@ -26,11 +26,15 @@ initializeSocket(server);
 
 app.use(cors({
   origin: [
-    "https://pingguard-frontend.vercel.app/",
+    "https://pingguard-frontend.vercel.app",
     "http://localhost:5173"
   ],
-  credentials: true
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
+app.options("*", cors());
 
 app.use(cookieParser());
 app.use(express.json());
@@ -43,7 +47,7 @@ app.use(passport.initialize());
 passport.use(new GoogleStrategy({
   clientID: Config.CLIENT_ID,
   clientSecret: Config.CLIENT_SECRET,
-  callbackURL: "/api/auth/google/callback"
+  callbackURL: "https://pingguard-backend.onrender.com/api/auth/google/callback"
 }, async (accessToken, refreshToken, profile, done) => {
   try {
     const email = profile.emails?.[0]?.value;
