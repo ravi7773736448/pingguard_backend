@@ -1,30 +1,19 @@
 import { Resend } from 'resend';
-import { Config } from '../config/config.js';
 
-let resendClient;
-
-const initResend = () => {
-  if (Config.RESEND_API_KEY) {
-    console.log('[EMAIL] Using Resend service');
-    return new Resend(Config.RESEND_API_KEY);
-  }
-  
-  console.log('[EMAIL] No email configuration found');
-  return null;
-};
-
-resendClient = initResend();
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const APP_NAME = 'PingGuard';
 
 const sendEmail = async (to, subject, text, html) => {
-  if (!resendClient) {
-    console.log('[EMAIL] Skipped - no transporter configured');
+  if (!process.env.RESEND_API_KEY) {
+    console.log('[EMAIL] RESEND_API_KEY not configured');
     return;
   }
   
   try {
-    const { data, error } = await resendClient.emails.send({
+    console.log('[EMAIL] Sending to:', to);
+    
+    const { data, error } = await resend.emails.send({
       from: `${APP_NAME} <onboarding@resend.dev>`,
       to: [to],
       subject,
@@ -33,13 +22,13 @@ const sendEmail = async (to, subject, text, html) => {
     });
 
     if (error) {
-      console.error('[EMAIL] Send failed:', error.message);
+      console.error('[EMAIL] Send failed:', error);
       return;
     }
 
-    console.log('[EMAIL] Sent:', data?.id);
+    console.log('[EMAIL] Sent successfully:', data?.id);
   } catch (error) {
-    console.error('[EMAIL] Send failed:', error.message);
+    console.error('[EMAIL] Send failed:', error);
   }
 };
 
