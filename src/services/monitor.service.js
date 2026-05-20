@@ -25,8 +25,8 @@ const processSingleCheck = async (website, email) => {
     const outageState = await getOrStartOutage(website, checkResult);
     activeIncident = outageState.activeIncident;
     isNewOutage = outageState.isNewOutage;
-  } else if (previousStatus === HTTP_STATUS.DOWN) {
-    // Check if recovery is occurring
+  } else if (previousStatus === HTTP_STATUS.DOWN && checkResult.status === HTTP_STATUS.UP) {
+    // Check if recovery is occurring - only when status changes to UP
     activeIncident = await resolveOutage(website, checkResult);
   }
 
