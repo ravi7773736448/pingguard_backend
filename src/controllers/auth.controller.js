@@ -42,7 +42,6 @@ export const register = async (req, res) => {
       secure: true,
       sameSite: 'none',
       path: '/',
-      domain: '.onrender.com',
       maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
@@ -97,7 +96,6 @@ export const login = async (req, res) => {
       secure: true,
       sameSite: 'none',
       path: '/',
-      domain: '.onrender.com',
       maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
@@ -136,21 +134,25 @@ export const logout = async (req, res) => {
 
 export const googleCallback = async (req, res) => {
   try {
+    console.log('[AUTH] Google callback - User:', req.user?.email);
+    
     const token = jwt.sign(
       { id: req.user._id, userId: req.user._id, email: req.user.email },
       Config.JWT_SECRET,
       { expiresIn: '7d' }
     );
 
+    console.log('[AUTH] Setting cookie - domain:', req.get('host'));
+
     res.cookie('token', token, {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
       path: '/',
-      domain: '.onrender.com',
       maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
+    console.log('[AUTH] Redirecting to dashboard with cookie set');
     res.redirect('https://pingguard-frontend.vercel.app/dashboard');
   } catch (error) {
     console.error('[AUTH] Google callback error:', error.message);
@@ -160,6 +162,9 @@ export const googleCallback = async (req, res) => {
 
 export const getCurrentUser = async (req, res) => {
   try {
+    console.log('[AUTH] getCurrentUser - Cookies:', req.cookies);
+    console.log('[AUTH] getCurrentUser - User from token:', req.user);
+    
     const user = await User.findById(req.user.userId).select('-password');
     
     if (!user) {

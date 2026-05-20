@@ -3,11 +3,16 @@ import { Config } from '../config/config.js';
 
 export const authenticate = async (req, res, next) => {
   try {
+    console.log('[AUTH MIDDLEWARE] Cookies:', req.cookies);
+    console.log('[AUTH MIDDLEWARE] Headers:', req.headers.cookie);
+    
     let token = req.cookies?.token;
     
     if (!token && req.headers.authorization?.startsWith('Bearer ')) {
       token = req.headers.authorization.split(' ')[1];
     }
+
+    console.log('[AUTH MIDDLEWARE] Token found:', token ? 'yes' : 'no');
 
     if (!token) {
       return res.status(401).json({
