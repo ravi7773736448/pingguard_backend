@@ -214,7 +214,7 @@ export const forgotPassword = async (req, res) => {
     user.resetPasswordExpires = resetExpires;
     await user.save();
 
-    const resetUrl = `${process.env.FRONTEND_URL || 'http://localhost:5173'}/reset-password?token=${resetToken}&email=${email}`;
+    const resetUrl = `${process.env.FRONTEND_URL || 'https://pingguard-frontend.vercel.app'}/reset-password?token=${resetToken}&email=${email}`;
 
     await sendEmail(
       user.email,

@@ -65,6 +65,7 @@ export const Config = {
     MISTRAL_API_KEY : process.env.MISTRAL_API_KEY,
     IMAGEKIT_PRIVATE_KEY: process.env.IMAGEKIT_PRIVATE_KEY,
     IMAGEKIT_PUBLIC_KEY : process.env.IMAGEKIT_PUBLIC_KEY,
+    FRONTEND_URL: process.env.FRONTEND_URL || 'https://pingguard-frontend.vercel.app',
 
 }
 
