@@ -41,6 +41,8 @@ export const register = async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
+      path: '/',
+      domain: '.onrender.com',
       maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
@@ -94,6 +96,8 @@ export const login = async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
+      path: '/',
+      domain: '.onrender.com',
       maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
@@ -142,6 +146,8 @@ export const googleCallback = async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
+      path: '/',
+      domain: '.onrender.com',
       maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
