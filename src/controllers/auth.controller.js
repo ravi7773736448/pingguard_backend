@@ -142,8 +142,6 @@ export const googleCallback = async (req, res) => {
       { expiresIn: '7d' }
     );
 
-    console.log('[AUTH] Setting cookie - domain:', req.get('host'));
-
     res.cookie('token', token, {
       httpOnly: true,
       secure: true,
@@ -152,8 +150,9 @@ export const googleCallback = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
-    console.log('[AUTH] Redirecting to dashboard with cookie set');
-    res.redirect('https://pingguard-frontend.vercel.app/dashboard');
+    // Also send token in query params for browsers that block cookies
+    console.log('[AUTH] Redirecting with token in URL');
+    res.redirect('https://pingguard-frontend.vercel.app/dashboard?token=' + token);
   } catch (error) {
     console.error('[AUTH] Google callback error:', error.message);
     res.redirect('https://pingguard-frontend.vercel.app/login?error=auth_failed');
