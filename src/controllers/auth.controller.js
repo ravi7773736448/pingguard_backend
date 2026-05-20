@@ -141,10 +141,10 @@ export const googleCallback = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
-    res.redirect(process.env.FRONTEND_URL || 'http://localhost:5173');
+    res.redirect('https://pingguard-frontend.vercel.app/dashboard');
   } catch (error) {
     console.error('[AUTH] Google callback error:', error.message);
-    res.redirect('http://localhost:5173/login?error=auth_failed');
+    res.redirect('https://pingguard-frontend.vercel.app/login?error=auth_failed');
   }
 };
 

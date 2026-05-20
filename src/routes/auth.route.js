@@ -30,10 +30,10 @@ router.post('/forgot-password', forgotPassword);
 
 router.post('/reset-password', resetPassword);
 
-router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'], prompt: 'select_account' }));
 
 router.get("/google/callback",
-    passport.authenticate("google",{session:false,failureRedirect: "http://localhost:5173/login"}),
+    passport.authenticate("google",{session:false,failureRedirect: "https://pingguard-frontend.vercel.app/login?error=auth_failed"}),
     googleCallback
 )
 
