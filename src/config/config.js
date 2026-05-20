@@ -14,13 +14,9 @@ if(!process.env.JWT_SECRET){
     throw new Error("JWT_SECRET is not in .env environment")
 }
 
-if(!process.env.EMAIL_USER){
-    throw new Error("EMAIL_USER is not in .env environment")
-}
-
-if(!process.env.REFRESH_TOKEN){
-    throw new Error("REFRESH_TOKEN is not in .env environment")
-}
+// Email configuration - optional, can use Resend or Gmail
+// If using Resend: set RESEND_API_KEY in .env
+// If using Gmail SMTP: set EMAIL_USER and EMAIL_PASS in .env
 if(!process.env.CLIENT_SECRET){
     throw new Error("CLIENT_SECRET is not in .env environment")
 }
@@ -62,6 +58,8 @@ export const Config = {
     REFRESH_TOKEN : process.env.REFRESH_TOKEN,
     CLIENT_SECRET : process.env.CLIENT_SECRET,
     EMAIL_USER : process.env.EMAIL_USER,
+    EMAIL_PASS : process.env.EMAIL_PASS,
+    RESEND_API_KEY : process.env.RESEND_API_KEY,
     REDIS_URL : process.env.REDIS_URL,
     GEMINI_API_KEY : process.env.GOOGLE_GEMINI_KEY,
     MISTRAL_API_KEY : process.env.MISTRAL_API_KEY,
