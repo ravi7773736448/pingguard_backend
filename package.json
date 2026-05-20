@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "dev": "set NODE_ENV=development && npx nodemon server.js",
+    "dev": "cross-env NODE_ENV=development nodemon server.js",
+    "build": "echo Build completed",
     "test": "echo \"Tests not configured\" && exit 0"
   },
   "keywords": [
@@ -27,6 +28,7 @@
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
+    "cross-env": "^10.1.0",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "express-rate-limit": "^8.5.2",
